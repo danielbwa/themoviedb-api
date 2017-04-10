@@ -19,6 +19,9 @@ module Tmdb
         if response.headers[:x_ratelimit_remaining].to_i < 10
           sleep 1
         end
+        if response.headers[:x_ratelimit_remaining].to_i == 1
+          sleep 10
+        end
       rescue => e
         parsed_exception_rs = parse_json(e.response)
 
