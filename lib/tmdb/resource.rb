@@ -16,6 +16,9 @@ module Tmdb
       begin
         response = RestClient.get Api::BASE_URI + query_url,
                                   Api::JSON_HEADERS.merge(params: request_params)
+        if response.headers[:x_ratelimit_remaining].to_i < 10
+          sleep 1
+        end
       rescue => e
         parsed_exception_rs = parse_json(e.response)
 
